@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge - Massaren | Commerce Général & Alimentation</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- AOS CSS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="icon" href="images/logo.png" type="image/vnd.microsoft.icon" />
+
+    <style>
+        :root {
+            --gold-primary: #D4AF37;
+            --gold-light: #F3E5AB;
+            --blue-royal: #0B3C5D;
+            --dark-bg: #121212;
+            --light-bg: #F8F9FA;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Top Bar & Navbar */
+        .top-bar {
+            background-color: var(--dark-bg);
+            color: #fff;
+            font-size: 0.85rem;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .navbar-brand img {
+            max-height: 55px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--blue-royal);
+            margin: 0 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--gold-primary) !important;
+            font-weight: 700;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(rgba(11, 60, 93, 0.85), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1610348725531-843dff563e2c?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            color: white;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .hero-title span {
+            color: var(--gold-primary);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #D4AF37, #AA7C11);
+            color: #fff;
+            border: none;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+            color: #fff;
+        }
+
+        /* Formulaire Express Hero */
+        .express-card {
+            background-color: rgba(255, 255, 255, 0.96);
+            border-radius: 15px;
+            border-top: 5px solid var(--gold-primary);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            color: #333;
+        }
+
+        /* Sections Header */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-weight: 700;
+            color: var(--blue-royal);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background: var(--gold-primary);
+            bottom: 0;
+            left: 20%;
+        }
+
+        /* Feature / Product Cards */
+        .card-custom {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            cursor: pointer; /* Indique qu'on peut cliquer sur la carte */
+        }
+
+        .card-custom:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .card-custom img {
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--gold-primary);
+        }
+
+        /* Highlight Section */
+        .highlight-box {
+            background-color: var(--light-bg);
+            border-left: 5px solid var(--gold-primary);
+            border-radius: 8px;
+            padding: 25px;
+        }
+
+        /* Map Container */
+        .map-container {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Animation Modale Droite à Gauche (Side Modal / Drawer) */
+        .modal-dialog-slide-right {
+            position: fixed;
+            margin: 0;
+            width: 100%;
+            max-width: 450px;
+            height: 100%;
+            right: 0;
+            top: 0;
+            transform: translateX(100%);
+            transition: transform 0.35s ease-in-out;
+        }
+
+        .modal.show .modal-dialog-slide-right {
+            transform: translateX(0);
+        }
+
+        .modal-dialog-slide-right .modal-content {
+            height: 100%;
+            border-radius: 0;
+            border: none;
+            overflow-y: auto;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-bg);
+            color: #ccc;
+        }
+
+        footer h5 {
+            color: var(--gold-primary);
+            font-weight: 600;
+        }
+
+        footer a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--gold-primary);
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--gold-primary);
+            color: #fff;
+        }
+    </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar-main" data-bs-offset="80">
+
+    <!-- Top Bar -->
+    <div class="top-bar py-2 d-none d-lg-block">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div>
+                <i class="bi bi-geo-alt-fill text-warning me-2"></i> Torokorobougou, Bamako, Rue 423, Porte 477
+                <i class="bi bi-envelope-fill text-warning ms-4 me-2"></i> challengemassaren223@gmail.com
+            </div>
+            <div>
+                <i class="bi bi-telephone-fill text-warning me-2"></i> (+223) 77 80 15 15 / 66 74 55 58
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar-main" class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="images/logo.png" alt="Logo Challenge-Massaren" class="me-2">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link active" href="#accueil">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#a-propos">À Propos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#alimentaire">Nos Produits</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#domaines">Secteurs d'Activité</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#visite">Nos Locaux</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-gold" href="https://wa.me/22377801515" target="_blank">
+                            <i class="bi bi-whatsapp me-2"></i>Commander
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="hero-section text-center text-lg-start">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-7" data-aos="fade-right">
+                    <h1 class="hero-title mb-3">CHALLENGE - <span>MASSAREN</span></h1>
+                    <p class="lead mb-2 text-warning fw-semibold">Commerce Général et Prestation de Services</p>
+                    <p class="fs-4 mb-3 font-italic">« Votre satisfaction, notre plus belle réussite. »</p>
+                    <p class="mb-4 opacity-75 fs-5">
+                        Spécialiste de la vente de produits alimentaires frais (fruits, légumes, poissons, viandes, bétail, volailles) et d'aliments pour animaux à Bamako.
+                    </p>
+                    <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3">
+                        <a href="#alimentaire" class="btn btn-gold btn-lg">Découvrir nos produits</a>
+                        <a href="#contact" class="btn btn-outline-light btn-lg rounded-pill">Nous Contacter</a>
+                    </div>
+                </div>
+
+                <!-- Formulaire Demande Express -->
+                <div class="col-lg-5" data-aos="fade-left">
+                    <div class="express-card p-4">
+                        <h3 class="fw-bold text-center mb-1" style="color: var(--blue-royal);">Demande Express</h3>
+                        <p class="text-center text-muted small mb-3">Passez une commande rapide ou demandez un devis</p>
+                        
+                        <form id="expressForm">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold small">Nom & Prénom</label>
+                                <input type="text" id="expressNom" class="form-control" required placeholder="Votre nom complet">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold small">Numéro de Téléphone</label>
+                                <input type="tel" id="expressTel" class="form-control" required placeholder="Ex: +223 77 00 00 00">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold small">Produit ou Service souhaité</label>
+                                <select id="expressProduit" class="form-select">
+                                    <option selected>Fruits & Légumes frais</option>
+                                    <option>Poissons frais / congelés</option>
+                                    <option>Bétail sur pied (Mouton, Vache, Chèvre, Chameau...)</option>
+                                    <option>Volailles vivantes (Poulets, Dindes, Pigeons...)</option>
+                                    <option>Viandes fraîches (Bétail, Poulet, Dinde)</option>
+                                    <option>Aliments pour animaux (Poisson, Volaille, Bétail)</option>
+                                    <option>Matériel & Intrants Agricoles</option>
+                                    <option>Autre prestation</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold small">Détail rapide de la demande</label>
+                                <textarea id="expressDetail" class="form-control" rows="2" placeholder="Quantité, date de livraison souhaitée..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-gold w-100 py-2">
+                                <i class="bi bi-send-fill me-2"></i>Envoyer la Demande Express
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- À Propos -->
+    <section id="a-propos" class="py-5">
+        <div class="container py-4">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
+                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80" alt="Produits frais" class="img-fluid rounded-4 shadow">
+                </div>
+                <div class="col-lg-6 ps-lg-5" data-aos="fade-left">
+                    <div class="section-title text-start mb-4">
+                        <h2>Bienvenue chez Challenge - Massaren</h2>
+                    </div>
+                    <p class="lead fw-normal text-muted">
+                        Basée à Torokorobougou, Bamako, notre entreprise s'impose comme une référence dans le **Commerce Général** et la fourniture de produits essentiels.
+                    </p>
+                    <p>
+                        Notre spécialité principale repose sur la **vente de produits alimentaires de première qualité** : fruits et légumes frais, viandes, poissons, bétail et volailles sélectionnés avec soin pour répondre aux exigences des ménages, restaurants et professionnels.
+                    </p>
+                    <div class="highlight-box my-4">
+                        <p class="mb-0 fw-semibold text-dark">
+                            <i class="bi bi-check-circle-fill text-warning me-2"></i>
+                            Nous commercialisons également des aliments spécialisés pour le bétail, la volaille et les poissons, ainsi que du matériel et des intrants agricoles.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Produits Alimentaires -->
+    <!-- Produits Alimentaires -->
+    <section id="alimentaire" class="py-5 bg-light">
+        <div class="container py-4">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Nos Produits Alimentaires & Élevage</h2>
+                <p class="text-muted mt-2">La fraîcheur, la qualité supérieure et le meilleur de l'élevage directement chez vous.</p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- 1. Légumes Frais -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card card-custom product-card">
+                        <img src="images/legumes_frais.jfif" class="card-img-top product-img" alt="Légumes frais">
+                        <div class="card-body p-4 text-center">
+                            <h4 class="card-title fw-bold product-title">Légumes Frais</h4>
+                            <p class="card-text text-muted product-desc">Tomates, oignons, piments, carottes, aubergines et bien d'autres légumes issus des meilleures récoltes locales.</p>
+                            <a href="https://wa.me/22377801515?text=Bonjour,%20je%20souhaite%20commander%20des%20légumes" class="btn btn-outline-warning text-dark fw-bold rounded-pill product-link" onclick="event.stopPropagation();">Commander sur WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Fruits de Saison -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card card-custom product-card">
+                        <img src="images/fruits_saison.jfif" class="card-img-top product-img" alt="Fruits frais">
+                        <div class="card-body p-4 text-center">
+                            <h4 class="card-title fw-bold product-title">Fruits de Saison</h4>
+                            <p class="card-text text-muted product-desc">Mangues, oranges, bananes, ananas, papayes... Des fruits juteux, sains et gorgés de saveurs naturelles.</p>
+                            <a href="https://wa.me/22377801515?text=Bonjour,%20je%20souhaite%20commander%20des%20fruits" class="btn btn-outline-warning text-dark fw-bold rounded-pill product-link" onclick="event.stopPropagation();">Commander sur WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Poissons Frais -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card card-custom product-card">
+                        <img src="images/poissons_frais.jfif" class="card-img-top product-img" alt="Poissons frais">
+                        <div class="card-body p-4 text-center">
+                            <h4 class="card-title fw-bold product-title">Poissons Frais</h4>
+                            <p class="card-text text-muted product-desc">Vente de poissons de fraîcheur garantie (capitaine, carpe, tilapias...) pour vos repas quotidiens et événements.</p>
+                            <a href="https://wa.me/22377801515?text=Bonjour,%20je%20souhaite%20commander%20du%20poisson" class="btn btn-outline-warning text-dark fw-bold rounded-pill product-link" onclick="event.stopPropagation();">Commander sur WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Vente de Bétail sur pied -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card card-custom product-card">
+                        <img src="images/betails_pieds.jfif" class="card-img-top product-img" alt="Bétail">
+                        <div class="card-body p-4 text-center">
+                            <h4 class="card-title fw-bold product-title">Bétail sur Pied</h4>
+                            <p class="card-text text-muted product-desc">Vente de bétail rigoureusement sélectionné : moutons, vaches, chèvres, chameaux, etc. Idéal pour élevage ou cérémonies.</p>
+                            <a href="https://wa.me/22377801515?text=Bonjour,%20je%20souhaite%20commander%20du%20bétail" class="btn btn-outline-warning text-dark fw-bold rounded-pill product-link" onclick="event.stopPropagation();">Commander sur WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Volailles Vivantes -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card card-custom product-card">
+                        <img src="images/volailles_vivantes.jfif" class="card-img-top product-img" alt="Volailles">
+                        <div class="card-body p-4 text-center">
+                            <h4 class="card-title fw-bold product-title">Volailles Vivantes</h4>
+                            <p class="card-text text-muted product-desc">Large choix de volailles : poulets (locaux & chair), dindes, dindons, pigeons, oies, pour toutes vos occasions.</p>
+                            <a href="https://wa.me/22377801515?text=Bonjour,%20je%20souhaite%20commander%20de%20la%20volaille" class="btn btn-outline-warning text-dark fw-bold rounded-pill product-link" onclick="event.stopPropagation();">Commander sur WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Viandes Fraîches de Bétail -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card card-custom product-card">
+                        <img src="images/viandes_betails.jfif" class="card-img-top product-img" alt="Viande de bétail">
+                        <div class="card-body p-4 text-center">
+                            <h4 class="card-title fw-bold product-title">Viandes de Bétail</h4>
+                            <p class="card-text text-muted product-desc">Découpe et vente de viande fraîche de bétail (mouton, vache, chèvre, chameau) préparée selon de strictes normes d'hygiène.</p>
+                            <a href="https://wa.me/22377801515?text=Bonjour,%20je%20souhaite%20commander%20de%20la%20viande%20de%20bétail" class="btn btn-outline-warning text-dark fw-bold rounded-pill product-link" onclick="event.stopPropagation();">Commander sur WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Viandes de Volaille -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card card-custom product-card">
+                        <img src="images/viande_volailles.jfif" class="card-img-top product-img" alt="Viande de poulet et dinde">
+                        <div class="card-body p-4 text-center">
+                            <h4 class="card-title fw-bold product-title">Viandes de Volaille</h4>
+                            <p class="card-text text-muted product-desc">Viande de poulet, viande de dinde et autres volailles fraîches ou nettoyées, prêtes pour vos cuissons.</p>
+                            <a href="https://wa.me/22377801515?text=Bonjour,%20je%20souhaite%20commander%20de%20la%20viande%20de%20volaille" class="btn btn-outline-warning text-dark fw-bold rounded-pill product-link" onclick="event.stopPropagation();">Commander sur WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. Aliments pour Bétail -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card card-custom product-card">
+                        <img src="images/aliments_betails.jfif" class="card-img-top product-img" alt="Aliments pour bétail">
+                        <div class="card-body p-4 text-center">
+                            <h4 class="card-title fw-bold product-title">Aliments pour Bétail</h4>
+                            <p class="card-text text-muted product-desc">Vente de nourriture enrichie et équilibrée pour bétail (vaches, moutons, chèvres, chameaux) pour un rendement optimal.</p>
+                            <a href="https://wa.me/22377801515?text=Bonjour,%20je%20souhaite%20commander%20des%20aliments%20pour%20bétail" class="btn btn-outline-warning text-dark fw-bold rounded-pill product-link" onclick="event.stopPropagation();">Commander sur WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. Aliments Poisson & Volaille -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card card-custom product-card">
+                        <img src="images/aliments_volailles_poissons.jfif" class="card-img-top product-img" alt="Aliments volaille et poisson">
+                        <div class="card-body p-4 text-center">
+                            <h4 class="card-title fw-bold product-title">Aliments Volaille & Poisson</h4>
+                            <p class="card-text text-muted product-desc">Granulés et aliments de croissance de haute qualité pour la nutrition des volailles (poussins/poulets) et des poissons d'élevage.</p>
+                            <a href="https://wa.me/22377801515?text=Bonjour,%20je%20souhaite%20commander%20des%20aliments%20volaille/poisson" class="btn btn-outline-warning text-dark fw-bold rounded-pill product-link" onclick="event.stopPropagation();">Commander sur WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. Lapins de Race & Locaux -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card card-custom product-card">
+                        <img src="images/lapin.jfif" class="card-img-top product-img" alt="Lapins de race et locaux">
+                        <div class="card-body p-4 text-center">
+                            <h4 class="card-title fw-bold product-title">Lapins de Race & Locaux</h4>
+                            <p class="card-text text-muted product-desc">Vente de lapins sélectionnés : races améliorées (Géant des Flandres, Californien, Papillon) et races locales pour élevage ou consommation.</p>
+                            <a href="https://wa.me/22377801515?text=Bonjour,%20je%20souhaite%20commander%20des%20lapins%20de%20race/locaux" class="btn btn-outline-warning text-dark fw-bold rounded-pill product-link" onclick="event.stopPropagation();">Commander sur WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modale avec animation Droite à Gauche -->
+    <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-slide-right">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title fw-bold text-warning" id="modalProductTitle">Détails du Produit</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <img id="modalProductImg" src="" alt="Produit" class="img-fluid rounded-3 mb-4 shadow-sm w-100" style="height: 250px; object-fit: cover;">
+                    <h4 id="modalProductHeader" class="fw-bold text-primary mb-3"></h4>
+                    <p id="modalProductDesc" class="text-muted leading-relaxed mb-4"></p>
+                    <div class="p-3 bg-light rounded-3 border mb-4">
+                        <small class="text-secondary d-block"><i class="bi bi-shield-check text-success me-1"></i> Qualité certifiée Challenge-Massaren</small>
+                        <small class="text-secondary d-block mt-1"><i class="bi bi-truck text-warning me-1"></i> Livraison rapide disponible à Bamako</small>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 p-4">
+                    <a id="modalProductBtn" href="#" target="_blank" class="btn btn-gold w-100 py-3 text-center">
+                        <i class="bi bi-whatsapp me-2"></i> Commander sur WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Secteurs d'Activité -->
+    <section id="domaines" class="py-5">
+        <div class="container py-4">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Nos Domaines de Vente</h2>
+                <p class="text-muted">Nous commercialisons du matériel, des intrants et équipements spécialisés pour :</p>
+            </div>
+
+            <div class="row g-4 text-center">
+                <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="p-4 border rounded-4 bg-white h-100 shadow-sm">
+                        <div class="card-icon mb-3"><i class="bi bi-flower1"></i></div>
+                        <h4 class="fw-bold">Agriculture</h4>
+                        <p class="text-muted small">Vente d'engrais, semences sélectionnées et outillages agricoles de précision.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="p-4 border rounded-4 bg-white h-100 shadow-sm">
+                        <div class="card-icon mb-3"><i class="bi bi-shield-check"></i></div>
+                        <h4 class="fw-bold">Élevage</h4>
+                        <p class="text-muted small">Vente d'aliments pour bétail/volaille et accessoires pour fermes modernes.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="p-4 border rounded-4 bg-white h-100 shadow-sm">
+                        <div class="card-icon mb-3"><i class="bi bi-water"></i></div>
+                        <h4 class="fw-bold">Pêche</h4>
+                        <p class="text-muted small">Équipements et matériels professionnels pour la pêche continentale et fluviale.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="p-4 border rounded-4 bg-white h-100 shadow-sm">
+                        <div class="card-icon mb-3"><i class="fa-solid fa-fish"></i></div>
+                        <h4 class="fw-bold">Pisciculture</h4>
+                        <p class="text-muted small">Aliments spécialisés pour poissons, alevins et dispositifs de bassins.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section : Rendez-nous visite -->
+    <section id="visite" class="py-5 bg-light">
+        <div class="container py-4">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Rendez-nous visite dans nos locaux</h2>
+                <p class="text-muted">Retrouvez-nous directement sur notre site de travail à Bamako pour vos achats et échanges.</p>
+            </div>
+
+            <div class="row align-items-center g-4">
+                <div class="col-lg-4" data-aos="fade-right">
+                    <div class="bg-white p-4 rounded-4 shadow-sm">
+                        <h4 class="fw-bold mb-3 text-primary-dark">Adresse exacte</h4>
+                        <div class="d-flex mb-3">
+                            <i class="bi bi-geo-alt-fill text-warning fs-3 me-3"></i>
+                            <div>
+                                <h6 class="fw-bold mb-1">Localisation</h6>
+                                <p class="text-muted mb-0">Torokorobougou, Bamako, Mali<br>Rue 423, Porte 477</p>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <i class="bi bi-clock-fill text-warning fs-4 me-3"></i>
+                            <div>
+                                <h6 class="fw-bold mb-1">Horaires d'ouverture</h6>
+                                <p class="text-muted mb-0">Lundi - Samedi : 08h00 - 18h30</p>
+                            </div>
+                        </div>
+                        <a href="https://maps.google.com/?q=Torokorobougou+Bamako" target="_blank" class="btn btn-gold w-100 mt-2">
+                            <i class="bi bi-box-arrow-up-right me-2"></i>Ouvrir dans Google Maps
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-8" data-aos="fade-left">
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31130.825686036833!2d-8.0185!3d12.6075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ec1b0f1fa8c03ad%3A0x8613143c7b39b03f!2sTorokorobougou%2C%20Bamako!5e0!3m2!1sfr!2sml!4v1710000000000!5m2!1sfr!2sml" 
+                            width="100%" 
+                            height="380" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact" class="py-5">
+        <div class="container py-4">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Contactez-Nous</h2>
+                <p class="text-muted">Passez vos commandes ou demandez un devis rapidement</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-5" data-aos="fade-right">
+                    <div class="bg-white p-4 rounded-4 shadow-sm h-100 border">
+                        <h4 class="fw-bold mb-4 text-primary-dark">Nos Coordonnées</h4>
+                        
+                        <div class="d-flex mb-3">
+                            <i class="bi bi-geo-alt fs-3 text-warning me-3"></i>
+                            <div>
+                                <h6 class="mb-0 fw-bold">Adresse :</h6>
+                                <p class="text-muted mb-0">Torokorobougou, Bamako<br>Rue : 423 | Porte : 477</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex mb-3">
+                            <i class="bi bi-telephone fs-3 text-warning me-3"></i>
+                            <div>
+                                <h6 class="mb-0 fw-bold">Téléphones :</h6>
+                                <p class="text-muted mb-0">(+223) 77 80 15 15<br>(+223) 66 74 55 58</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex mb-3">
+                            <i class="bi bi-envelope fs-3 text-warning me-3"></i>
+                            <div>
+                                <h6 class="mb-0 fw-bold">Email :</h6>
+                                <p class="text-muted mb-0">challengemassaren223@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex">
+                            <i class="bi bi-globe fs-3 text-warning me-3"></i>
+                            <div>
+                                <h6 class="mb-0 fw-bold">Site Web :</h6>
+                                <p class="text-muted mb-0">www.challengemassaren.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7" data-aos="fade-left">
+                    <div class="bg-white p-4 rounded-4 shadow-sm border">
+                        <h4 class="fw-bold mb-4">Envoyez-nous un message</h4>
+                        <form id="contactForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nom complet</label>
+                                    <input type="text" id="contactNom" class="form-control" required placeholder="Votre nom">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Téléphone</label>
+                                    <input type="tel" id="contactTel" class="form-control" required placeholder="Ex: +223 70 00 00 00">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Sujet de la demande</label>
+                                    <select id="contactSujet" class="form-select">
+                                        <option selected>Achat de légumes / fruits</option>
+                                        <option>Achat de poissons / viandes</option>
+                                        <option>Achat de Bétail / Volailles vivantes</option>
+                                        <option>Aliments pour animaux (Bétail, Volaille, Poisson)</option>
+                                        <option>Équipement / Intrants Agricoles</option>
+                                        <option>Autre prestation</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Message</label>
+                                    <textarea id="contactMessage" class="form-control" rows="4" required placeholder="Détaillez votre commande ou votre question..."></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-gold w-100 py-3">
+                                        <i class="bi bi-envelope-at-fill me-2"></i>Envoyer via Gmail
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pt-5 pb-3">
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-lg-4">
+                    <h5 class="mb-3">CHALLENGE - MASSAREN</h5>
+                    <p class="small">
+                        Commerce Général et Prestations de Services. Vente de produits alimentaires, bétail, volailles et équipements spécialisés au Mali.
+                    </p>
+                    <p class="fst-italic text-warning small">« Votre satisfaction, notre plus belle réussite. »</p>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-3">Liens Rapides</h5>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#accueil"><i class="bi bi-chevron-right me-1"></i> Accueil</a></li>
+                        <li class="mb-2"><a href="#a-propos"><i class="bi bi-chevron-right me-1"></i> À Propos</a></li>
+                        <li class="mb-2"><a href="#alimentaire"><i class="bi bi-chevron-right me-1"></i> Nos Produits</a></li>
+                        <li class="mb-2"><a href="#domaines"><i class="bi bi-chevron-right me-1"></i> Agro-Pêche-Élevage</a></li>
+                        <li class="mb-2"><a href="#visite"><i class="bi bi-chevron-right me-1"></i> Nos Locaux</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-3">Suivez-nous</h5>
+                    <div class="social-links mb-3">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="https://wa.me/22377801515"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                    </div>
+                    <p class="small mb-0"><i class="bi bi-geo-alt text-warning"></i> Torokorobougou, Bamako, Mali</p>
+                </div>
+            </div>
+            <hr class="border-secondary">
+            <div class="text-center small">
+                &copy; 2026 Challenge - Massaren. Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS JS (Animate On Scroll) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+    // Initialisation de la bibliothèque d'animation AOS
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true,
+        offset: 100
+    });
+
+    // 1. Gestion de l'élément sélectionné dans la NavBar (Activation Active)
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            navLinks.forEach(item => item.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Smooth Scrolling pour la navigation (exclut le bouton de la modale)
+    document.querySelectorAll('a[href^="#"]:not(#modalProductBtn)').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href && href !== '#') {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+    });
+
+    // 2. Gestion de la modale dynamique au clic sur une carte produit
+    const productModal = new bootstrap.Modal(document.getElementById('productModal'));
+
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', function (e) {
+            // Si le clic se fait sur le bouton WhatsApp direct de la carte
+            if (e.target.closest('.product-link')) {
+                return;
+            }
+
+            // Extraction des informations produit
+            const img = this.querySelector('.product-img')?.src || '';
+            const title = this.querySelector('.product-title')?.innerText || '';
+            const desc = this.querySelector('.product-desc')?.innerText || '';
+            
+            // Extraction du lien WhatsApp configuré sur le bouton
+            const linkBtn = this.querySelector('.product-link');
+            const link = linkBtn ? linkBtn.getAttribute('href') : '#';
+
+            // Injection dans la modale
+            document.getElementById('modalProductImg').src = img;
+            document.getElementById('modalProductHeader').innerText = title;
+            document.getElementById('modalProductDesc').innerText = desc;
+            
+            // Mise à jour du bouton de la modale
+            const modalBtn = document.getElementById('modalProductBtn');
+            if (modalBtn) {
+                modalBtn.setAttribute('href', link);
+            }
+
+            // Affichage de la modale
+            productModal.show();
+        });
+    });
+
+    const destEmail = 'challengemassaren223@gmail.com';
+
+    // Formulaire Express (Gmail)
+    const expressForm = document.getElementById('expressForm');
+    if (expressForm) {
+        expressForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nom = document.getElementById('expressNom').value;
+            const tel = document.getElementById('expressTel').value;
+            const produit = document.getElementById('expressProduit').value;
+            const detail = document.getElementById('expressDetail').value;
+
+            const subject = encodeURIComponent(`Demande Express - ${produit} (${nom})`);
+            const body = encodeURIComponent(
+                `Bonjour L'équipe Challenge - Massaren,\n\n` +
+                `Voici une nouvelle demande express depuis votre site web :\n\n` +
+                `• Nom & Prénom : ${nom}\n` +
+                `• Téléphone : ${tel}\n` +
+                `• Produit/Service souhaité : ${produit}\n` +
+                `• Détails de la demande : ${detail}\n\n` +
+                `Merci de me recontacter.`
+            );
+
+            window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${destEmail}&su=${subject}&body=${body}`, '_blank');
+            this.reset();
+        });
+    }
+
+    // Formulaire Contact (Gmail)
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nom = document.getElementById('contactNom').value;
+            const tel = document.getElementById('contactTel').value;
+            const sujet = document.getElementById('contactSujet').value;
+            const message = document.getElementById('contactMessage').value;
+
+            const subject = encodeURIComponent(`Contact Web - ${sujet} (${nom})`);
+            const body = encodeURIComponent(
+                `Bonjour L'équipe Challenge - Massaren,\n\n` +
+                `Vous avez reçu un nouveau message depuis le formulaire de contact :\n\n` +
+                `• Nom complet : ${nom}\n` +
+                `• Téléphone : ${tel}\n` +
+                `• Sujet : ${sujet}\n` +
+                `• Message :\n${message}\n\n` +
+                `Cordialement,`
+            );
+
+            window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${destEmail}&su=${subject}&body=${body}`, '_blank');
+            this.reset();
+        });
+    }
+</script>
+</body>
+</html>
